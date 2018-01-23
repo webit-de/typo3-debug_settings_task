@@ -5,7 +5,7 @@ namespace Webit\LiveSettingsTask\Task;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2018 Grahl marco <grahl@webit.de>
+ *  (c) 2018 Marco Grahl <grahl@webit.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,6 +26,7 @@ namespace Webit\LiveSettingsTask\Task;
  ***************************************************************/
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Controller\Action\Tool\Configuration;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
@@ -43,6 +44,37 @@ class LiveSettingsTask extends AbstractTask
      */
     public function execute()
     {
+        $currentApplicationContext = \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext();
+        if ($currentApplicationContext->isProduction()) {
+            /* @var \TYPO3\CMS\Install\Controller\Action\Tool\Configuration $configurationTool*/
+            $configurationTool = GeneralUtility::makeInstance(Configuration::class);
+            $configurationTool->setController('tool');
+            $configurationTool->setAction('configuration');
+            $configurationPostValues = array (
+                'controller' => 'tool',
+                'action' => 'configuration',
+                'context' => 'backend',
+                'values' =>
+                    array (
+                        'Context' =>
+                            array (
+                                'enable' => 'Live'
+                            )
+                    ),
+                'set' =>
+                    array (
+                        'activate' => 'submit'
+                    )
+            );
+            $configurationTool->setPostValues($configurationPostValues);
+            $configurationTool->handle();
+
+            $this->addNotification(
+                'Live-Preset is set!',
+                FlashMessage::INFO,
+                true
+            );
+        }
         return true;
     }
 

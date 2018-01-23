@@ -8,6 +8,6 @@
 		<languageKey index="default" type="array">
 			<label index="live_settings_in_production_context_task.title">Live-setting-preset by production-context</label>
 			<label index="live_settings_in_production_context_task.description">Sets the Live-setting-preset as active if the system-context is production.</label>
-
+		</languageKey>
 	</data>
 </T3locallang>
