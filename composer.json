@@ -1,0 +1,17 @@
+{
+  "name": "webit-de/live-settings-in-production-context-task",
+  "description": "Sets the Live-Setting-Preset as active if the System-Context is Production",
+  "license": "GPL-2.0",
+  "type": "typo3-cms-extension",
+  "require": {
+    "php": ">=7.0.0",
+    "typo3/cms-core": "^7.6 || ^8.7"
+  },
+  "autoload": {
+    "psr-4": {"Webit\\LiveSettingsTask\\": "Classes/"}
+  },
+  "replace": {
+    "live_settings_in_production_context_task": "self.version",
+    "typo3-ter/live_settings_in_production_context_task": "self.version"
+  }
+}

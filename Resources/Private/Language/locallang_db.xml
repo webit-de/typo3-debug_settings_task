@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'live_settings_in_production_context_task'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="live_settings_in_production_context_task.title">Live-setting-preset by production-context</label>
+			<label index="live_settings_in_production_context_task.description">Sets the Live-setting-preset as active if the system-context is production.</label>
+
+	</data>
+</T3locallang>
