@@ -1,5 +1,5 @@
-live-setting-preset by production-context
-===============
+Debug Settings Task
+===================
 
 This TYPO3 scheduler task sets live-setting-preset as active if the system is in production-context.
 

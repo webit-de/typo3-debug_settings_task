@@ -2,12 +2,12 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'live_settings_in_production_context_task'</description>
+		<description>Language labels for database tables/fields belonging to extension 'debug_settings_task'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="live_settings_in_production_context_task.title">Live-setting-preset by production-context</label>
-			<label index="live_settings_in_production_context_task.description">Sets the Live-setting-preset as active if the system-context is production.</label>
+			<label index="debug_settings_task.title">Live-setting-preset by production-context</label>
+			<label index="debug_settings_task.description">Sets the Live-setting-preset as active if the system-context is production.</label>
 		</languageKey>
 	</data>
 </T3locallang>
