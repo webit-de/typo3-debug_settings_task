@@ -30,7 +30,7 @@ use TYPO3\CMS\Install\Controller\Action\Tool\Configuration;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
- * Set Live-Setting if the System is in Production-Context
+ * Set live preset for debug settings if system is in production context
  *
  * @author    Grahl marco <grahl@webit.de>
  */
@@ -46,6 +46,7 @@ class DebugSettingsTask extends AbstractTask
     {
         $currentApplicationContext = \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext();
         if ($currentApplicationContext->isProduction()) {
+            // Use the install tool to set the »live« preset for debug settings
             /* @var \TYPO3\CMS\Install\Controller\Action\Tool\Configuration $configurationTool*/
             $configurationTool = GeneralUtility::makeInstance(Configuration::class);
             $configurationTool->setController('tool');
@@ -70,7 +71,7 @@ class DebugSettingsTask extends AbstractTask
             $configurationTool->handle();
 
             $this->addNotification(
-                'Live-Preset is set!',
+                'Live preset for debug settings is set!',
                 FlashMessage::INFO,
                 true
             );

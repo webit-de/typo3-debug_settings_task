@@ -1,6 +1,7 @@
 {
   "name": "webit-de/debug-settings-task",
-  "description": "Sets the Live-Setting-Preset as active if the System-Context is Production",
+  "description": "Set live preset for debug settings by task, if system is in production context",
+  "homepage": "https://github.com/webit-de/typo3-debug_settings_task",
   "license": "GPL-2.0+",
   "type": "typo3-cms-extension",
   "require": {
