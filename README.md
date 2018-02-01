@@ -10,6 +10,8 @@ to the »live« preset in the install tool, every time the task runs.
 [![Packagist](https://img.shields.io/packagist/v/webit-de/debug-settings-task.svg)](https://packagist.org/packages/webit-de/debug-settings-task/)
 [![TYPO3](https://img.shields.io/badge/TYPO3-extension-orange.svg)](https://extensions.typo3.org/)
 
+![Debug settings preset in TYPO3 Install Tool](./Resources/Public/image/debug-settings-preset.png)
+
 Requirements
 ------------
 
