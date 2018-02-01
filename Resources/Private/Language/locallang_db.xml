@@ -6,8 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="debug_settings_task.title">Live-setting-preset by production-context</label>
-			<label index="debug_settings_task.description">Sets the Live-setting-preset as active if the system-context is production.</label>
+			<label index="debug_settings_task.title">Reset Debug Settings Preset</label>
+			<label index="debug_settings_task.description">Set live preset for debug settings by task, if system is in production context</label>
 		</languageKey>
 	</data>
 </T3locallang>

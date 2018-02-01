@@ -1,8 +1,8 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'live-setting-preset by production-context',
-    'description' => 'Sets the Live-setting-preset as active if the system-context is production.',
+    'title' => 'Debug Settings Task',
+    'description' => 'Set live preset for debug settings by task, if system is in production context',
     'category' => 'misc',
     'author' => 'Marco Grahl',
     'author_email' => 'grahl@webit.de',
