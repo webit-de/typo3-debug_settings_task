@@ -3,9 +3,9 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-// scheduler task - create extension list
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Webit\\LiveSettingsTask\\Task\\LiveSettingsTask'] = [
+// Register scheduler task
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['WebitDe\\DebugSettingsTask\\Task\\DebugSettingsTask'] = [
     'extension' => $_EXTKEY,
-    'title' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_db.xml:live_settings_in_production_context_task.title',
-    'description' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_db.xml:live_settings_in_production_context_task.description',
+    'title' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_db.xml:debug_settings_task.title',
+    'description' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_db.xml:debug_settings_task.description',
 ];

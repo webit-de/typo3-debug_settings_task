@@ -1,6 +1,6 @@
 <?php
 
-namespace Webit\LiveSettingsTask\Task;
+namespace WebitDe\DebugSettingsTask\Task;
 
 /***************************************************************
  *  Copyright notice
@@ -34,7 +34,7 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  *
  * @author    Marco Grahl <grahl@webit.de>
  */
-class LiveSettingsTask extends AbstractTask
+class DebugSettingsTask extends AbstractTask
 {
     /**
      * Main method executed from scheduler.
@@ -101,7 +101,7 @@ class LiveSettingsTask extends AbstractTask
         $flashMessageQueue->enqueue($flashMessage);
 
         if ($devLog) {
-            GeneralUtility::devLog($flashMessage, 'PublicationCleanupTask', 1);
+            GeneralUtility::devLog($flashMessage, 'DebugSetttingsTask', 1);
         }
     }
 }
