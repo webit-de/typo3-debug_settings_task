@@ -31,7 +31,7 @@ https://github.com/webit-de/typo3-debug_settings_task/
 License
 -------
 
-GNU General Public License version 2
+GNU General Public License version 2 or later
 
 The GNU General Public License can be found at http://www.gnu.org/copyleft/gpl.html.
 
