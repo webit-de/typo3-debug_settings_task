@@ -26,16 +26,20 @@ namespace WebitDe\DebugSettingsTask\Task;
  ***************************************************************/
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Controller\Action\Tool\Configuration;
+use TYPO3\CMS\Install\Configuration\FeatureManager;
+use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
+use Psr\Log\LoggerAwareinterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Set live preset for debug settings if system is in production context
  *
  * @author    Marco Grahl <grahl@webit.de>
  */
-class DebugSettingsTask extends AbstractTask
+class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
     /**
      * Main method executed from scheduler.
      * Set live-settings-preset if system is in production-context
@@ -44,31 +48,17 @@ class DebugSettingsTask extends AbstractTask
      */
     public function execute()
     {
-        $currentApplicationContext = \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext();
+        $currentApplicationContext = \TYPO3\CMS\Core\Core\Environment::getContext();
         if ($currentApplicationContext->isProduction()) {
-            // Use the install tool to set the »live« preset for debug settings
-            /* @var \TYPO3\CMS\Install\Controller\Action\Tool\Configuration $configurationTool*/
-            $configurationTool = GeneralUtility::makeInstance(Configuration::class);
-            $configurationTool->setController('tool');
-            $configurationTool->setAction('configuration');
-            $configurationPostValues = array (
-                'controller' => 'tool',
-                'action' => 'configuration',
-                'context' => 'backend',
-                'values' =>
-                    array (
-                        'Context' =>
-                            array (
-                                'enable' => 'Live'
-                            )
-                    ),
-                'set' =>
-                    array (
-                        'activate' => 'submit'
-                    )
+            $featureManager = new FeatureManager();
+            $configurationManager = new ConfigurationManager();
+            $values = array(
+                'Context' => array(
+                    'enable' => 'Live'
+                )
             );
-            $configurationTool->setPostValues($configurationPostValues);
-            $configurationTool->handle();
+            $configurationValues = $featureManager ->getConfigurationForSelectedFeaturePresets($values);
+            $configurationManager->setLocalConfigurationValuesByPathValuePairs($configurationValues);
 
             $this->addNotification(
                 'Live preset for debug settings is set!',
@@ -102,7 +92,7 @@ class DebugSettingsTask extends AbstractTask
         $flashMessageQueue->enqueue($flashMessage);
 
         if ($devLog) {
-            GeneralUtility::devLog($flashMessage, 'DebugSetttingsTask', 1);
+            $this->logger->notice($message);
         }
     }
 }

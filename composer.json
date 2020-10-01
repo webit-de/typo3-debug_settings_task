@@ -5,14 +5,13 @@
   "license": "GPL-2.0-or-later",
   "type": "typo3-cms-extension",
   "require": {
-    "php": ">=7.0.0",
-    "typo3/cms-core": "^7.6 || ^8.7"
+    "php": ">=7.2.0",
+    "typo3/cms-core": "^9.5 || ^10.4"
   },
   "autoload": {
     "psr-4": {"WebitDe\\DebugSettingsTask\\": "Classes/"}
   },
   "replace": {
-    "debug_settings_task": "self.version",
     "typo3-ter/debug-settings-task": "self.version"
   }
 }
