@@ -1,5 +1,4 @@
-Changelog
-=========
+# Changelog
 
 2018-02-05 Dan Untenzu <untenzu@webit.de>
 
