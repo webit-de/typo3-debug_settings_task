@@ -11,6 +11,11 @@
   "autoload": {
     "psr-4": {"WebitDe\\DebugSettingsTask\\": "Classes/"}
   },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "debug_settings_task"
+    }
+  },
   "replace": {
     "typo3-ter/debug-settings-task": "self.version"
   }
