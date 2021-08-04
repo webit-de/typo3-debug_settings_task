@@ -15,7 +15,7 @@ production using a scheduler task.
 
 “Better safe than sorry”.
 
-This extension helps to make shure that debug settings are correct on
+This extension helps to make sure that debug settings are correct on
 production stages.
 
 If the debug mode was activated on a production stage for whatever reason,

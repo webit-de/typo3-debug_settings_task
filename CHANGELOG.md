@@ -1,5 +1,10 @@
 # Changelog
 
+2021-08-04 Dan Untenzu <untenzu@webit.de>
+
+  * 2.1.0
+  * FEATURE Composer: Add extension name
+
 2020-10-09 Dan Untenzu <untenzu@webit.de>
 
   * 2.0.0
