@@ -24,13 +24,13 @@ namespace WebitDe\DebugSettingsTask\Task;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Psr\Log\LoggerAwareinterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Configuration\FeatureManager;
-use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
-use Psr\Log\LoggerAwareinterface;
-use Psr\Log\LoggerAwareTrait;
 
 /**
  * Set live preset for debug settings if system is in production context
@@ -44,7 +44,7 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      * Main method executed from scheduler.
      * Set live-settings-preset if system is in production-context
      *
-     * @return boolean $success
+     * @return bool $success
      */
     public function execute()
     {
@@ -52,12 +52,12 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
         if ($currentApplicationContext->isProduction()) {
             $featureManager = new FeatureManager();
             $configurationManager = new ConfigurationManager();
-            $values = array(
-                'Context' => array(
+            $values = [
+                'Context' => [
                     'enable' => 'Live'
-                )
-            );
-            $configurationValues = $featureManager ->getConfigurationForSelectedFeaturePresets($values);
+                ]
+            ];
+            $configurationValues = $featureManager->getConfigurationForSelectedFeaturePresets($values);
             $configurationManager->setLocalConfigurationValuesByPathValuePairs($configurationValues);
 
             $this->addNotification(
@@ -75,11 +75,17 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      * @param string $message  The message itself
      * @param int    $severity Message level (see FlashMessage class constants)
      * @param bool   $devLog   Flag to set devlog or not (default = FALSE)
-     *
-     * @return void
      */
     public function addNotification($message, $severity = FlashMessage::ERROR, $devLog = false)
     {
+        if ($devLog) {
+            $this->logger->notice($message);
+        }
+
+        if (TYPO3_MODE !== 'BE' || PHP_SAPI === 'cli') {
+            return;
+        }
+
         $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
         $flashMessage = GeneralUtility::makeInstance(
             'TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
@@ -90,9 +96,5 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
         );
         $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $flashMessageQueue->enqueue($flashMessage);
-
-        if ($devLog) {
-            $this->logger->notice($message);
-        }
     }
 }
