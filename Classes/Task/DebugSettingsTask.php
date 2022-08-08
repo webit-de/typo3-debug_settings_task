@@ -50,15 +50,20 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
     {
         $currentApplicationContext = \TYPO3\CMS\Core\Core\Environment::getContext();
         if ($currentApplicationContext->isProduction()) {
-            $featureManager = new FeatureManager();
-            $configurationManager = new ConfigurationManager();
+            $featureManager = GeneralUtility::makeInstance(FeatureManager::class);
+            $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
             $values = [
                 'Context' => [
                     'enable' => 'Live'
                 ]
             ];
+
             $configurationValues = $featureManager->getConfigurationForSelectedFeaturePresets($values);
-            $configurationManager->setLocalConfigurationValuesByPathValuePairs($configurationValues);
+            try {
+                $configurationManager->setLocalConfigurationValuesByPathValuePairs($configurationValues);
+            } catch (\RuntimeException $ex) {
+                $this->logger->error($ex->getMessage());
+            }
 
             $this->addNotification(
                 'Live preset for debug settings is set!',
@@ -82,19 +87,17 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
             $this->logger->notice($message);
         }
 
-        if (TYPO3_MODE !== 'BE' || PHP_SAPI === 'cli') {
-            return;
+        if (TYPO3_MODE === 'BE' && PHP_SAPI !== 'cli') {
+            $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
+            $flashMessage = GeneralUtility::makeInstance(
+                'TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                $message,
+                '',
+                $severity,
+                true
+            );
+            $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+            $flashMessageQueue->enqueue($flashMessage);
         }
-
-        $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
-        $flashMessage = GeneralUtility::makeInstance(
-            'TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-            $message,
-            '',
-            $severity,
-            true
-        );
-        $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
-        $flashMessageQueue->enqueue($flashMessage);
     }
 }
