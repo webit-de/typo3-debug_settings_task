@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+	<file datatype="plaintext" original="messages" source-language="en" product-name="debug_settings_task">
+		<header/>
+		<body>
+			<trans-unit id="task.debugSettingsTask.title" resname="task.debugSettingsTask.title">
+				<source>Reset Debug Settings Preset</source>
+			</trans-unit>
+			<trans-unit id="task.debugSettingsTask.description" resname="task.debugSettingsTask.description">
+				<source>Set live preset for debug settings by task, if system is in production context</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
