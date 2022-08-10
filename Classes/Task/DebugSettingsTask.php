@@ -27,7 +27,10 @@ namespace WebitDe\DebugSettingsTask\Task;
 use Psr\Log\LoggerAwareinterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Configuration\ConfigurationManager;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Configuration\FeatureManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
@@ -48,8 +51,8 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      */
     public function execute()
     {
-        $currentApplicationContext = \TYPO3\CMS\Core\Core\Environment::getContext();
-        if ($currentApplicationContext->isProduction()) {
+        $currentApplicationContext = Environment::getContext();
+        if ($currentApplicationContext->isProduction() || 1) {
             $featureManager = GeneralUtility::makeInstance(FeatureManager::class);
             $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
             $values = [
@@ -67,7 +70,7 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
 
             $this->addNotification(
                 'Live preset for debug settings is set!',
-                FlashMessage::INFO,
+                AbstractMessage::INFO,
                 true
             );
         }
@@ -78,19 +81,19 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      * Add a message to the internal queue and devLog
      *
      * @param string $message  The message itself
-     * @param int    $severity Message level (see FlashMessage class constants)
+     * @param int    $severity Message level (see AbstractMessage class constants)
      * @param bool   $devLog   Flag to set devlog or not (default = FALSE)
      */
-    public function addNotification($message, $severity = FlashMessage::ERROR, $devLog = false)
+    public function addNotification($message, $severity = AbstractMessage::ERROR, $devLog = false)
     {
         if ($devLog) {
             $this->logger->notice($message);
         }
 
         if (TYPO3_MODE === 'BE' && PHP_SAPI !== 'cli') {
-            $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
+            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
             $flashMessage = GeneralUtility::makeInstance(
-                'TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                FlashMessage::class,
                 $message,
                 '',
                 $severity,
