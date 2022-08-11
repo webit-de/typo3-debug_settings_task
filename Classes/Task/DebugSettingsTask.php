@@ -52,7 +52,7 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
     public function execute()
     {
         $currentApplicationContext = Environment::getContext();
-        if ($currentApplicationContext->isProduction() || 1) {
+        if ($currentApplicationContext->isProduction()) {
             $featureManager = GeneralUtility::makeInstance(FeatureManager::class);
             $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
             $values = [
@@ -82,14 +82,9 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      *
      * @param string $message  The message itself
      * @param int    $severity Message level (see AbstractMessage class constants)
-     * @param bool   $devLog   Flag to set devlog or not (default = FALSE)
      */
-    public function addNotification($message, $severity = AbstractMessage::ERROR, $devLog = false)
+    public function addNotification($message, $severity = AbstractMessage::ERROR)
     {
-        if ($devLog) {
-            $this->logger->notice($message);
-        }
-
         if (TYPO3_MODE === 'BE' && PHP_SAPI !== 'cli') {
             $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
             $flashMessage = GeneralUtility::makeInstance(
