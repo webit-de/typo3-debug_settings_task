@@ -1,5 +1,13 @@
 # Changelog
 
+2022-08-11 Matthias Puhlmann <matthias.puhlmann@webit.de>
+
+  * 2.2.0
+  * TASK set version to stable
+  * TASK cleanup code
+  * FEATURE add TYPO3 11.5 and PHP 8.1 compatibility
+  * BUGFIX catch errors and handle flash message in BE context
+
 2021-08-04 Dan Untenzu <untenzu@webit.de>
 
   * 2.1.0
