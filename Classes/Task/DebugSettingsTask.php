@@ -57,8 +57,8 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
             $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
             $values = [
                 'Context' => [
-                    'enable' => 'Live'
-                ]
+                    'enable' => 'Live',
+                ],
             ];
 
             $configurationValues = $featureManager->getConfigurationForSelectedFeaturePresets($values);
