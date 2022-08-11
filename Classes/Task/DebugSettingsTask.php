@@ -85,6 +85,8 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      */
     public function addNotification($message, $severity = AbstractMessage::ERROR)
     {
+        $this->logger->notice($message);
+
         if (TYPO3_MODE === 'BE' && PHP_SAPI !== 'cli') {
             $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
             $flashMessage = GeneralUtility::makeInstance(
