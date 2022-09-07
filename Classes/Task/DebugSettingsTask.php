@@ -28,6 +28,7 @@ use Psr\Log\LoggerAwareinterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -84,11 +85,14 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
      * @param string $message  The message itself
      * @param int    $severity Message level (see AbstractMessage class constants)
      */
-    public function addNotification($message, $severity = AbstractMessage::ERROR)
+    public function addNotification(string $message, $severity = AbstractMessage::ERROR): void
     {
         $this->logger->notice($message);
 
-        if (TYPO3_MODE === 'BE' && PHP_SAPI !== 'cli') {
+        if (
+            PHP_SAPI !== 'cli' &&
+            (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend())
+        ) {
             $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
             $flashMessage = GeneralUtility::makeInstance(
                 FlashMessage::class,
