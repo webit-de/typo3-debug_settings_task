@@ -65,6 +65,7 @@ class DebugSettingsTask extends AbstractTask implements LoggerAwareInterface
             try {
                 $configurationManager->setLocalConfigurationValuesByPathValuePairs($configurationValues);
             } catch (\RuntimeException $ex) {
+                // @extensionScannerIgnoreLine
                 $this->logger->error($ex->getMessage());
             }
 
